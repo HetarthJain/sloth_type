@@ -1,0 +1,95 @@
+:root{
+	--bgcol:#333;
+	--textPri: #fff;
+	--textSec: #666;
+	--priCol:#fd4;
+}
+body{
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	background-color: var(--bgcol);
+	color: var(--textPri);
+	font-size: 1.2rem;
+}
+h1{
+	color: var(--priCol);
+}
+#header{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin: 20px 6px 30px ;
+}
+#buttons{
+	text-align: right;
+}
+#info{
+	color: var(--priCol);
+}
+button{
+	background: rgba(255,255,255,.2);
+	border-radius: 5px;
+	border: 0;
+	padding: 5px 20px;
+	color: rgba(255,255,255,.5);
+	cursor: pointer;
+}
+#game{
+	line-height: 30px;
+	height: 90px;
+	overflow: hidden; 
+	position: relative;
+}
+#game:focus #words{
+	filter: blur(0);
+}
+#words{
+	filter: blur(3px);
+}
+#game:focus #focus-error{
+	display: none;
+}
+#focus-error{
+	position: absolute;
+	inset: 0;
+	text-align: center;
+	padding-top: 30px;
+}
+div.word{
+	display: inline-block;
+	margin: 0 5px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--textSec);
+}
+.letter.correct{
+	color: #fff;
+}
+.letter.incorrect{
+	color: #f55;
+}
+@keyframes blink{
+	0%{opacity: 1;}
+	50%{opacity: 0;}
+	100%{opacity: 1;}
+}
+#cursor{
+	width: 2px;
+	height: 1.4rem;
+	background-color: var(--priCol);
+	position: fixed;
+	top: 165px;
+	left: 11px;
+	animation: blink .7s infinite ;
+	display: none;
+}
+#game:focus #cursor{
+	display: block;
+}
+#game.over #words{
+opacity: .5;
+filter: blur(0px);
+}
+#game.over:focus #cursor{
+	display: none;
+}
+#game.over #focus-error{
+	display: none;
+}
