@@ -72,7 +72,7 @@ document.getElementById('game').addEventListener('keyup', ev => {
 	const isSpace = key === ' '
 	const isBackspace = key === 'Backspace';
 	const isFirstLetter = currLetter === currWord.firstChild;
-	const extra = document.querySelector('letter.extra')
+	const extra = document.querySelector('.letter.extra')
 	
 	if(document.querySelector('#game.over')) return
 
