@@ -2,7 +2,7 @@ const words = "boy walked down street in a carefree way playing without notice o
 
 const wordCount = words.length
 // game stats
-const gameTime = 60 * 1000;
+const gameTime = 15 * 1000;
 window.timer = null;
 window.gameStart = null;
 window.pauseTime = 0;
@@ -30,12 +30,23 @@ function newGame() {
 	for (let i = 0; i < 200; i++){
 		document.getElementById('words').innerHTML += formatWord(randomWord(words))	
 	}
-	// adding current labels to word and letter
+	// adding current labels to first word and letter
 	addClass(document.querySelector('.word'),'current')
 	addClass(document.querySelector('.letter'), 'current')
+
 	// setting game time
 	document.getElementById('info').innerHTML = (gameTime / 1000) + '';
+
+	// set game over to game
+	removeClass(document.getElementById('game'), 'over');
 	window.timer = null;
+
+	// set cursor back to start
+	const nextLetter = document.querySelector('.letter.current');
+	const nextWord = document.querySelector('.word.current');
+	const cursor = document.getElementById('cursor');
+	cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 2 + 'px';
+	cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
 }
 function getWpm() {
 	// taking all words into an array
@@ -72,8 +83,9 @@ document.getElementById('game').addEventListener('keyup', ev => {
 	const isSpace = key === ' '
 	const isBackspace = key === 'Backspace';
 	const isFirstLetter = currLetter === currWord.firstChild;
-	const extra = document.querySelector('.letter.extra')
-	
+	const allExtra = document.querySelectorAll('.letter.incorrect.extra')
+	const currExtra = allExtra[allExtra.length-1]
+	// if game over then return
 	if(document.querySelector('#game.over')) return
 
 	if (!window.timer && isLetter) {
@@ -128,23 +140,14 @@ document.getElementById('game').addEventListener('keyup', ev => {
 	}
 	// checking if there is any backspace input
 	if (isBackspace) {
-	    if (extra) {
+	    if (currWord.lastChild === currExtra) {
 			// If there is an extra letter present, remove it
-			
-			const lastletter = extra && currWord.lastChild 
-			// console.log("last letter",currWord.lastChild)
-			// console.log("last extra letter",lastletter)
+			const lastletter = currWord.lastChild
 	        lastletter.remove();
 	    } else {
 	        // If there's no extra letter, handle backspace as usual
-	        if (currLetter && isFirstLetter) {
-	            // make prev word curr and its last letter curr
-	            removeClass(currWord, 'current');
-	            addClass(currWord.previousSibling, 'current');
-	            removeClass(currLetter, 'current');
-	            addClass(currWord.previousSibling.lastChild, 'current');
-	            removeClass(currWord.previousSibling.lastChild, 'correct');
-	            removeClass(currWord.previousSibling.lastChild, 'incorrect');
+			if (currLetter && isFirstLetter) {
+				// do nothing
 	        } else if (currLetter && !isFirstLetter) {
 	            // move back 1 letter and invalidate the letter
 	            removeClass(currLetter, 'current');
@@ -174,9 +177,10 @@ document.getElementById('game').addEventListener('keyup', ev => {
 	cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
 })
 
-document.getElementById('newGameBtn').addEventListener('click', () => {
+document.getElementById('newGameBtn').addEventListener("click", () => {
 	gameOver();
+	console.log("new game")
 	newGame();
 });
-  
+console.log("first game")
 newGame()

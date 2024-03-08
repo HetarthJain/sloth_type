@@ -10,25 +10,35 @@ body{
 	color: var(--textPri);
 	font-size: 1.2rem;
 }
+main{
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+}
 h1{
 	color: var(--priCol);
 }
 #header{
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	margin: 20px 6px 30px ;
+	display: flex;
+	width:60%;
+	justify-content: space-between;
+	margin: 20px 0;
 }
 #buttons{
 	text-align: right;
 }
 #info{
 	color: var(--priCol);
+	margin: 5px 5px;
 }
 button{
 	background: rgba(255,255,255,.2);
 	border-radius: 5px;
 	border: 0;
-	padding: 5px 20px;
+	padding: 10px 20px;
 	color: rgba(255,255,255,.5);
 	cursor: pointer;
 }
@@ -37,6 +47,8 @@ button{
 	height: 90px;
 	overflow: hidden; 
 	position: relative;
+	display: flex;
+	width:60%
 }
 #game:focus #words{
 	filter: blur(0);
